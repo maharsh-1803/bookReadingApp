@@ -22,14 +22,41 @@ const login = async (req, res) => {
         console.log(tokenData);
 
         res.status(200).json({
-            message: "Login Successfully",
-            data: tokenData.token
+            id:admin._id,
+            toekn: tokenData.token
         });
     } catch (error) {
         console.error('Login error:', error);
         return res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+const changePassword = async(req,res)=>{
+    try {
+        const {currentPassword,newPassword} = req.body;
+        if(!currentPassword || !newPassword)
+        {
+            return res.status(400).json({ error: "Current and new password are required" });
+        }
+        const admin = await Admin.findById(req.user._id);
+        if (!admin) {
+            return res.status(404).json({ error: "Admin not found" });
+        }
+        if(admin.password!=currentPassword)
+        {
+            return res.status(400).json({ error: "Current password is incorrect" });
+
+        }
+        if(admin.password == currentPassword)
+        {
+            admin.password = newPassword;
+            await admin.save();
+        }
+        res.status(200).json({message:"password change successfully"})
+    } catch (error) {
+        
+    }
+}
 
 const signup = async(req,res) => {
     const admin = new Admin(req.body);
@@ -42,5 +69,6 @@ const signup = async(req,res) => {
 }
 module.exports = {
     login,
-    signup
+    signup,
+    changePassword
 };
