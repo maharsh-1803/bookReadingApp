@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = rquireq('cors');
+const cors = require('cors');
 const adminRoute = require('./routes/admin.route.js'); // Adjust the path accordingly
 const categoryRoute = require('./routes/category.route.js')
 const authorRoute = require('./routes/author.route.js')
