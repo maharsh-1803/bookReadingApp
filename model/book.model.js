@@ -21,10 +21,9 @@ const bookSchema = new mongoose.Schema({
     },
     book_cover_photo: {
         type: String,
-        required: true
     },
     book_page: {
-        type: [String],
+        type:String,
     },
     status: {
         type: Boolean

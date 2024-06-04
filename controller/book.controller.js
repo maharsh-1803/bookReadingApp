@@ -38,6 +38,10 @@ const addBook = async (req, res) => {
     }
 }
 
+const deleteBook = async(req,res)=>{
+    const {id} = req.params;
+}
+
 module.exports = {
     addBook
 }
