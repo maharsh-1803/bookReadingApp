@@ -129,7 +129,7 @@ const bookDetail = async(req,res)=>{
 }
 
 const booksByAuthor = async (req, res) => {
-    const { name } = req.params;
+    const { name } = req.body;
 
     try {
         const author = await Author.findOne({ name });
