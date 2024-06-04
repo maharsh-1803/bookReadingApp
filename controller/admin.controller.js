@@ -23,7 +23,7 @@ const login = async (req, res) => {
 
         res.status(200).json({
             id:admin._id,
-            toekn: tokenData.token
+            token: tokenData.token
         });
     } catch (error) {
         console.error('Login error:', error);
