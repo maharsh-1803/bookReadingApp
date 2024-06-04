@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const pageSchema = new mongoose.Schema({
+    page_no:{
+        type:String,
+        require:true
+    },
+    content:{
+        type:String,
+        require:true
+    }
+})
+
 const bookSchema = new mongoose.Schema({
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
@@ -22,9 +33,7 @@ const bookSchema = new mongoose.Schema({
     book_cover_photo: {
         type: String,
     },
-    book_page: {
-        type:String,
-    },
+    book_page: [pageSchema],
     status: {
         type: Boolean
     }

@@ -1,5 +1,5 @@
 const express = require('express');
-const { registerAuthor, profileDisplay, loginAuthor, allAuthor, authorDetail, changeStatus } = require('../controller/author.controller');
+const { registerAuthor, profileDisplay, loginAuthor, allAuthor, authorDetail, changeStatus, editAuthor, deleteAuthor } = require('../controller/author.controller');
 const upload= require('../middleware/multerFile.js');
 const adminToken = require('../middleware/adminToken.js');
 
@@ -11,6 +11,8 @@ router.post('/loginAuthor',loginAuthor)
 router.get('/allAuthor',adminToken,allAuthor)
 router.get('/authorDetail/:id',adminToken,authorDetail)
 router.patch('/changeStatus/:id',adminToken,changeStatus)
+router.patch('/editAuthor/:id',adminToken,editAuthor)
+router.delete('/deleteAuthor/:id',adminToken,deleteAuthor);
 
 
 module.exports=router

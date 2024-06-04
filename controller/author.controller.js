@@ -106,11 +106,59 @@ const changeStatus = async(req,res)=>{
     }
 }
 
+const editAuthor = async (req, res) => {
+    const { id } = req.params;
+    const { name, dob, city, state, country, gender, status, mobile, email } = req.body;
+    const file = req.file; 
+
+    try {
+        let author = await Author.findById(id);
+        if (!author) {
+            return res.status(404).send({ message: "Author not found with this id" });
+        }
+
+        
+        author.name = name;
+        author.dob = dob;
+        author.city = city;
+        author.state = state;
+        author.country = country;
+        author.gender = gender;
+        author.status = status;
+        author.mobile = mobile;
+        author.email = email;
+
+        
+        if (file) {
+            author.photo = file.filename;
+        }
+
+        await author.save();
+
+        res.status(200).json({ message: "Author updated successfully", author });
+    } catch (error) {
+        res.status(400).send({ error: error.message });
+    }
+}
+
+const deleteAuthor = async(req,res)=>{
+    const {id} = req.params;
+    try {
+        const author = await Author.findByIdAndDelete(id);
+        res.status(200).send(author);
+    } catch (error) {
+        res.status(400).send({error:error.message})
+    }
+}
+
+
 module.exports = {
     registerAuthor,
     profileDisplay,
     loginAuthor,
     allAuthor,
     authorDetail,
-    changeStatus
+    changeStatus,
+    editAuthor,
+    deleteAuthor
 }
