@@ -1,5 +1,5 @@
 const express = require('express');
-const { login, signup, changePassword } = require('../controller/admin.controller.js'); // Adjust the path accordingly
+const { login, signup, changePassword } = require('../controller/admin.controller.js'); 
 const adminToken = require('../middleware/adminToken.js');
 
 const router = express.Router();

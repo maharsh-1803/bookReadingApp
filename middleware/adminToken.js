@@ -14,7 +14,7 @@ const adminToken = (req, res, next) => {
             return res.status(500).json({ message: "Failed to verify token" });
         }
 
-        req.user = decoded;
+        req.admin = decoded;
         next();
     });
 };

@@ -26,7 +26,7 @@ const authorSchema = new mongoose.Schema({
         require:true
     },
     photo:{
-        originalName:String
+        type:String
     },
     status:{
         type:Boolean,
