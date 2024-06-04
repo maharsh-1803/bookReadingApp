@@ -3,11 +3,11 @@ const Book = require('../model/book.model.js');
 const Category = require('../model/category.model.js');
 
 const addBook = async (req, res) => {
-    const { book_title, book_description, book_page, status, category_name, author_name } = req.body;
+    const { book_title, book_description, book_page, status, category_name, name } = req.body;
     const file = req.file;
 
     try {
-        const author = await Author.findOne({ author_name });
+        const author = await Author.findOne({ name });
         if (!author) {
             return res.status(400).send({ error: 'Author not found' });
         }

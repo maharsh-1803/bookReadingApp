@@ -75,64 +75,49 @@ const allAuthor = async(req,res)=>{
     }
 }
 
-const authorDetail = async(req,res)=>{
-    const {id} = req.params;
-    try {
-        const author = await Author.findById(id)
-        if(!author){
-            res.status(404).send({message:"author not found with this id"})
-        }
-        res.status(200).send(author);
-    } catch (error) {
-        res.status(400).send({error:error.message})
-    }
-}
-
-const changeStatus = async(req,res)=>{
-    const {id} = req.params
-    const {status} = req.body
-    try {
-        const author = await Author.findById(id);
-        if(!author)
-        {
-            res.status(400).send({message:"author not found with this id"})
-        }
-        author.status = status;
-        await author.save();
-        res.status(200).send(author)
-        
-    } catch (error) {
-        res.status(400).send({error:error.message})
-    }
-}
 
 const editAuthor = async (req, res) => {
     const { id } = req.params;
-    const { name, dob, city, state, country, gender, status, mobile, email } = req.body;
+    const updateFields = req.body; 
     const file = req.file; 
 
     try {
         let author = await Author.findById(id);
         if (!author) {
-            return res.status(404).send({ message: "Author not found with this id" });
+            return res.status(404).send({ message: "Author not found with this ID" });
+        }
+        if (updateFields.name) {
+            author.name = updateFields.name;
+        }
+        if (updateFields.dob) {
+            author.dob = updateFields.dob;
+        }
+        if (updateFields.city) {
+            author.city = updateFields.city;
+        }
+        if (updateFields.state) {
+            author.state = updateFields.state;
+        }
+        if (updateFields.country) {
+            author.country = updateFields.country;
+        }
+        if (updateFields.gender) {
+            author.gender = updateFields.gender;
+        }
+        if (updateFields.status) {
+            author.status = updateFields.status;
+        }
+        if (updateFields.mobile) {
+            author.mobile = updateFields.mobile;
+        }
+        if (updateFields.email) {
+            author.email = updateFields.email;
         }
 
-        
-        author.name = name;
-        author.dob = dob;
-        author.city = city;
-        author.state = state;
-        author.country = country;
-        author.gender = gender;
-        author.status = status;
-        author.mobile = mobile;
-        author.email = email;
-
-        
         if (file) {
             author.photo = file.filename;
         }
-
+        
         await author.save();
 
         res.status(200).json({ message: "Author updated successfully", author });
@@ -157,8 +142,6 @@ module.exports = {
     profileDisplay,
     loginAuthor,
     allAuthor,
-    authorDetail,
-    changeStatus,
     editAuthor,
     deleteAuthor
 }
