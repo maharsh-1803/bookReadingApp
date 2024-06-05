@@ -63,7 +63,7 @@ const displayAllBook = async (req, res) => {
 
 const editBook = async (req, res) => {
     const { id } = req.params;
-    const { book_title, book_description, book_page, status, category_name, author_name } = req.body;
+    const { book_title, book_description, book_page, status, category_name, name } = req.body;
     const file = req.file;
 
     try {
@@ -72,8 +72,8 @@ const editBook = async (req, res) => {
             return res.status(404).send({ error: 'Book not found' });
         }
 
-        if (author_name) {
-            const author = await Author.findOne({ author_name });
+        if (name) {
+            const author = await Author.findOne({ name });
             if (!author) {
                 return res.status(400).send({ error: 'Author not found' });
             }
