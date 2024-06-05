@@ -62,9 +62,9 @@ const signup = async(req,res) => {
     const admin = new Admin(req.body);
     try {
         await admin.save();
-        res.status(201).send(admin);
+        return res.status(201).send(admin);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 module.exports = {

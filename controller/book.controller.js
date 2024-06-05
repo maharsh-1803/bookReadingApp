@@ -32,9 +32,9 @@ const addBook = async (req, res) => {
         });
 
         await newBook.save();
-        res.status(200).send(newBook);
+        return res.status(200).send(newBook);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 
@@ -42,24 +42,22 @@ const deleteBook = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const book = await Book.findById(id);
+        const book = await Book.findByIdAndDelete(id);
         if (!book) {
             return res.status(404).send({ error: 'Book not found' });
         }
-
-        await book.remove();
-        res.status(200).send({ message: 'Book deleted successfully' });
+        return res.status(200).send({ message: 'Book deleted successfully' });
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 
 const displayAllBook = async (req, res) => {
     try {
         const books = await Book.find()
-        res.status(200).send(books);
+        return res.status(200).send(books);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 
@@ -108,9 +106,9 @@ const editBook = async (req, res) => {
         }
 
         await book.save();
-        res.status(200).send(book);
+        return res.status(200).send(book);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 
@@ -120,11 +118,11 @@ const bookDetail = async(req,res)=>{
         const book = await Book.findById(id)
         if(!book)
         {
-            res.status(400).send({message:"book is not present with this id"})
+            return res.status(400).send({message:"book is not present with this id"})
         }
-        res.status(200).send(book);
+        return res.status(200).send(book);
     } catch (error) {
-        res.status(400).send({error:error.message})
+        return res.status(400).send({error:error.message})
     }
 }
 
@@ -164,9 +162,9 @@ const booksByAuthor = async (req, res) => {
             }
         ]);
 
-        res.status(200).send(books);
+        return res.status(200).send(books);
     } catch (error) {
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 }
 

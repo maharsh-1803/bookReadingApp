@@ -21,12 +21,12 @@ const registerAuthor = async(req,res)=>{
 
         
         await newAuthor.save();
-        res.status(201).json({
+        return res.status(201).json({
             newAuthor,
             token:tokenData.token
         });
     } catch (error) {
-        res.status(400).send({error:error.message})
+        return res.status(400).send({error:error.message})
     }
 }
 
@@ -34,7 +34,7 @@ const profileDisplay = async(req,res)=>{
     const {id} = req.params;
     try {
         const author = await Author.findById(id);
-        res.status(200).send(author)
+        return res.status(200).send(author)
     } catch (error) {
         res.status(400).send({error:error.message})
     }
