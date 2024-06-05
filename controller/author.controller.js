@@ -79,6 +79,7 @@ const allAuthor = async(req,res)=>{
 const editAuthor = async (req, res) => {
     const { id } = req.params;
     const updateFields = req.body; 
+    console.log(req.body);
     const file = req.file; 
 
     try {

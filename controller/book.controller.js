@@ -66,12 +66,12 @@ const editBook = async (req, res) => {
     const { book_title, book_description, book_page, status, category_name, name } = req.body;
     const file = req.file;
 
+
     try {
         const book = await Book.findById(id);
         if (!book) {
             return res.status(404).send({ error: 'Book not found' });
         }
-
         if (name) {
             const author = await Author.findOne({ name });
             if (!author) {
@@ -79,7 +79,6 @@ const editBook = async (req, res) => {
             }
             book.author_id = author._id;
         }
-
         if (category_name) {
             const category = await Category.findOne({ category_name });
             if (!category) {
@@ -87,20 +86,18 @@ const editBook = async (req, res) => {
             }
             book.category_id = category._id;
         }
-
         if (file) {
             book.book_cover_photo = file.filename;
         }
-
         if (book_title) {
             book.book_title = book_title;
         }
-        if (book_description){
+        if (book_description) {
             book.book_description = book_description;
-        } 
-        if (book_page){
+        }
+        if (book_page) {
             book.book_page = book_page;
-        } 
+        }
         if (status) {
             book.status = status;
         }
