@@ -37,9 +37,9 @@ const allBook = async(req,res)=>{
 }
 
 const bookDetail = async(req,res)=>{
-    const {book_title} = req.body;
+    const {id} = req.params;
     try {
-        const book = await Book.findOne({book_title})
+        const book = await Book.findOne(id)
         if(!book)
         {
             return res.status(400).send({message:"book not found"})
@@ -64,9 +64,9 @@ const allUser = async(req,res)=>{
 }
 
 const userDetail = async(req,res)=>{
-    const {reg_id} = req.body;
+    const {id} = req.params;
     try {
-        const user = await User.find({reg_id});
+        const user = await User.find(id);
         if(!user)
         {
             return res.status(400).send({message:"user not found"});
