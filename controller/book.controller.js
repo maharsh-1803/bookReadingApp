@@ -124,10 +124,10 @@ const bookDetail = async(req,res)=>{
 }
 
 const booksByAuthor = async (req, res) => {
-    const { name } = req.body;
+    const { id } = req.params;
 
     try {
-        const author = await Author.findOne({ name });
+        const author = await Author.findById(id);
         if (!author) {
             return res.status(404).send({ error: 'Author not found' });
         }
@@ -159,7 +159,10 @@ const booksByAuthor = async (req, res) => {
             }
         ]);
 
-        return res.status(200).send(books);
+        return res.status(200).json({
+            message:"Book got successfully",
+            books:books
+        });
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }

@@ -10,6 +10,6 @@ router.delete('/deleteBook/:id', adminToken, deleteBook); // authenticate by aut
 router.get('/displayAllBook',adminToken,displayAllBook)
 router.patch('/editBook/:id',adminToken,editBook); //authenticate by author
 router.get('/bookDetail/:id',adminToken,bookDetail);
-router.get('/getBooksByAuthor',adminToken,booksByAuthor)
+router.get('/getBooksByAuthor/:id',adminToken,booksByAuthor)
 
 module.exports = router;
