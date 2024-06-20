@@ -31,7 +31,7 @@ const removeReadBook = async (req, res) => {
     const { book_title } = req.body;
 
     try {
-        const user = await User.findById(reg_id);
+        const user = await User.findOne({reg_id});
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
