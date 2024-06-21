@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const mobileNumberRegex = /^[0-9]{10}$/;
+
 const authorSchema = new mongoose.Schema({
     name:{
         type:String,
@@ -34,7 +36,14 @@ const authorSchema = new mongoose.Schema({
     },
     mobile:{
         type:String,
-        require:true
+        require:true,
+        validate: {
+            validator: function(v) {
+                return mobileNumberRegex.test(v);
+            },
+            message: props => `${props.value} is not a valid mobile number!`
+        }
+        
     },
     email:{
         type:String,
