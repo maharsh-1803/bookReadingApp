@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/addBook', upload.single('file'),adminToken,addBook); //authenticate by author
 router.delete('/deleteBook/:id', adminToken, deleteBook); // authenticate by author
 router.get('/displayAllBook',adminToken,displayAllBook)
-router.patch('/editBook/:id',adminToken,editBook); //authenticate by author
+router.patch('/editBook/:id',upload.single('file'),adminToken,editBook); //authenticate by author
 router.get('/bookDetail/:id',adminToken,bookDetail);
 router.get('/getBooksByAuthor/:id',adminToken,booksByAuthor)
 

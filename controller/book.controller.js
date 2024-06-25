@@ -66,60 +66,60 @@ const editBook = async (req, res) => {
     const { book_title, book_description, book_page, status, category_name, name } = req.body;
     const file = req.file;
 
-
     try {
-        const book = await Book.findById(id);
+        let book = await Book.findById(id);
         if (!book) {
             return res.status(404).send({ error: 'Book not found' });
         }
+
+
         if (name) {
             const author = await Author.findOne({ name });
             if (!author) {
                 return res.status(400).send({ error: 'Author not found' });
             }
-            book.author_id = author._id;
+            updateFields.author_id = author._id;
         }
+
         if (category_name) {
             const category = await Category.findOne({ category_name });
             if (!category) {
                 return res.status(400).send({ error: 'Category not found' });
             }
-            book.category_id = category._id;
+            updateFields.category_id = category._id;
         }
+        const updateFields = {
+            book_title,
+            book_description,
+            book_page,
+            status,
+            category_name,
+            name
+        };
         if (file) {
-            book.book_cover_photo = file.filename;
-        }
-        if (book_title) {
-            book.book_title = book_title;
-        }
-        if (book_description) {
-            book.book_description = book_description;
-        }
-        if (book_page) {
-            book.book_page = book_page;
-        }
-        if (status) {
-            book.status = status;
+            updateFields.book_cover_photo = req.file.filename
         }
 
-        await book.save();
-        return res.status(200).send(book);
+        let updatedBook = await Book.findByIdAndUpdate(id, updateFields, { new: true });
+
+        return res.status(200).send(updatedBook);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
 }
 
-const bookDetail = async(req,res)=>{
-    const {id} = req.params;
+
+
+const bookDetail = async (req, res) => {
+    const { id } = req.params;
     try {
         const book = await Book.findById(id)
-        if(!book)
-        {
-            return res.status(400).send({message:"book is not present with this id"})
+        if (!book) {
+            return res.status(400).send({ message: "book is not present with this id" })
         }
         return res.status(200).send(book);
     } catch (error) {
-        return res.status(400).send({error:error.message})
+        return res.status(400).send({ error: error.message })
     }
 }
 
@@ -160,8 +160,8 @@ const booksByAuthor = async (req, res) => {
         ]);
 
         return res.status(200).json({
-            message:"Book got successfully",
-            books:books
+            message: "Book got successfully",
+            books: books
         });
     } catch (error) {
         return res.status(400).send({ error: error.message });
