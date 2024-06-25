@@ -9,7 +9,7 @@ router.post('/registerAuthor',upload.single('file'),registerAuthor);
 router.get('/profileDisplay/:id',profileDisplay)
 router.post('/loginAuthor',loginAuthor)
 router.get('/allAuthor',adminToken,allAuthor)
-router.patch('/editAuthor/:id',adminToken,editAuthor)
+router.patch('/editAuthor/:id',adminToken,upload.single('file'),editAuthor);
 router.delete('/deleteAuthor/:id',adminToken,deleteAuthor);
 
 
