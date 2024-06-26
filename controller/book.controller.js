@@ -67,6 +67,14 @@ const editBook = async (req, res) => {
     const file = req.file;
 
     try {
+        const updateFields = {
+            book_title,
+            book_description,
+            book_page,
+            status,
+            category_name,
+            name
+        };
         let book = await Book.findById(id);
         if (!book) {
             return res.status(404).send({ error: 'Book not found' });
@@ -88,14 +96,6 @@ const editBook = async (req, res) => {
             }
             updateFields.category_id = category._id;
         }
-        const updateFields = {
-            book_title,
-            book_description,
-            book_page,
-            status,
-            category_name,
-            name
-        };
         if (file) {
             updateFields.book_cover_photo = req.file.filename
         }
