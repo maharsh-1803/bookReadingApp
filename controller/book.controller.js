@@ -54,12 +54,46 @@ const deleteBook = async (req, res) => {
 
 const displayAllBook = async (req, res) => {
     try {
-        const books = await Book.find()
+        const books = await Book.aggregate([
+            {
+                $lookup: {
+                    from: 'authors', // Collection name in MongoDB
+                    localField: 'author_id', // Field in the Book collection
+                    foreignField: '_id', // Field in the Author collection
+                    as: 'authorDetails' // Name of the field to add the author details
+                }
+            },
+            {
+                $unwind: '$authorDetails' // Unwind the array to get author details as an object
+            },
+            {
+                $project: {
+                    _id: 1,
+                    book_title: 1,
+                    book_description: 1,
+                    status: 1,
+                    book_cover_photo: 1,
+                    createdAt: 1,
+                    updatedAt: 1,
+                    'authorDetails.name': 1, // Include only the author's name
+                    'authorDetails.dob': 1,  // Include the author's date of birth
+                    'authorDetails.city': 1, // Include the author's city
+                    'authorDetails.state': 1, // Include the author's state
+                    'authorDetails.country': 1, // Include the author's country
+                    'authorDetails.gender': 1, // Include the author's gender
+                    'authorDetails.photo': 1, // Include the author's photo
+                    'authorDetails.email': 1, // Include the author's email
+                    'authorDetails.mobile': 1 // Include the author's mobile number
+                }
+            }
+        ]);
+
         return res.status(200).send(books);
     } catch (error) {
         return res.status(400).send({ error: error.message });
     }
-}
+};
+
 
 const editBook = async (req, res) => {
     const { id } = req.params;
