@@ -112,20 +112,30 @@ const editBook = async (req, res) => {
 
 const bookDetail = async (req, res) => {
     const { id } = req.params;
+    const baseURL = "https://bookingreadingapp.onrender.com/uploads";
     try {
-        const book = await Book.findById(id)
+        const book = await Book.findById(id);
         if (!book) {
-            return res.status(400).send({ message: "book is not present with this id" })
+            return res.status(400).send({ message: "Book is not present with this ID" });
         }
-        return res.status(200).send(book);
+
+        const bookWithFullURL = {
+            ...book.toObject(), 
+            book_cover_photo: baseURL + "/" + book.book_cover_photo
+        };
+
+        return res.status(200).send(bookWithFullURL);
     } catch (error) {
-        return res.status(400).send({ error: error.message })
+        return res.status(400).send({ error: error.message });
     }
-}
+};
+
+module.exports = bookDetail;
+
 
 const booksByAuthor = async (req, res) => {
     const { id } = req.params;
-
+    const baseURL = "https://bookingreadingapp.onrender.com/uploads";
     try {
         const author = await Author.findById(id);
         if (!author) {

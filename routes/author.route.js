@@ -5,7 +5,7 @@ const adminToken = require('../middleware/adminToken.js');
 
 const router = express.Router();
 
-router.post('/registerAuthor',upload.single('file'),registerAuthor);
+router.post('/registerAuthor',upload.single('file'),adminToken,registerAuthor);
 router.get('/profileDisplay/:id',profileDisplay)
 router.post('/loginAuthor',loginAuthor)
 router.get('/allAuthor',adminToken,allAuthor)

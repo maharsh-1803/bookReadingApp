@@ -35,7 +35,10 @@ const bookSchema = new mongoose.Schema({
     },
     book_page: [pageSchema],
     status: {
-        type: Boolean
+        type: String,
+        enum:['pending','approve','decline'],
+        default:'pending',
+        require:true
     }
 }, { timestamps: true });
 
