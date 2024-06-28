@@ -75,15 +75,15 @@ const displayAllBook = async (req, res) => {
                     book_cover_photo: 1,
                     createdAt: 1,
                     updatedAt: 1,
-                    'authorDetails.name': 1, // Include only the author's name
-                    'authorDetails.dob': 1,  // Include the author's date of birth
-                    'authorDetails.city': 1, // Include the author's city
-                    'authorDetails.state': 1, // Include the author's state
-                    'authorDetails.country': 1, // Include the author's country
-                    'authorDetails.gender': 1, // Include the author's gender
-                    'authorDetails.photo': 1, // Include the author's photo
-                    'authorDetails.email': 1, // Include the author's email
-                    'authorDetails.mobile': 1 // Include the author's mobile number
+                    'authorDetails.name': 1, 
+                    'authorDetails.dob': 1,  
+                    'authorDetails.city': 1, 
+                    'authorDetails.state': 1, 
+                    'authorDetails.country': 1, 
+                    'authorDetails.gender': 1, 
+                    'authorDetails.photo': 1, 
+                    'authorDetails.email': 1, 
+                    'authorDetails.mobile': 1 
                 }
             }
         ]);
@@ -202,10 +202,14 @@ const booksByAuthor = async (req, res) => {
                 }
             }
         ]);
+        const booksWithFullURL = books.map(book => ({
+            ...book,
+            book_cover_photo: `${baseURL}/${book.book_cover_photo}`
+        }));
 
         return res.status(200).json({
             message: "Book got successfully",
-            books: books
+            books: booksWithFullURL
         });
     } catch (error) {
         return res.status(400).send({ error: error.message });

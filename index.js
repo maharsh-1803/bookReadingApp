@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path')
 // const multer = require('multer')
 // const upload = multer();
 const adminRoute = require('./routes/admin.route.js'); // Adjust the path accordingly
@@ -14,7 +15,12 @@ require('dotenv').config()
 
 const app = express();
 
-app.use("/uploads", express.static("./uploads"));
+app.use('/uploads', (req, res, next) => {
+    console.log(`Serving static file: ${req.url}`);
+    next();
+  });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.use(cors());

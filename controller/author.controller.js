@@ -75,18 +75,25 @@ const loginAuthor = async(req,res)=>{
     
 }
 
-const allAuthor = async(req,res)=>{
+const allAuthor = async (req, res) => {
+    const baseURL = 'https://bookingreadingapp.onrender.com/uploads';
+
     try {
-        const author = await Author.find();
-        if(!author)
-        {
-            res.status(400).send({message:"no any author"})
+        const authors = await Author.find();
+        if (!authors || authors.length === 0) {
+            return res.status(400).send({ message: "No authors found" });
         }
-        res.status(200).send(author)
+
+        const authorsWithPhotoURL = authors.map(author => ({
+            ...author._doc,
+            photo: author.photo ? `${baseURL}/${author.photo}` : null
+        }));
+
+        return res.status(200).send(authorsWithPhotoURL);
     } catch (error) {
-        res.status(400).send({error:error.message})
+        return res.status(400).send({ error: error.message });
     }
-}
+};
 
 
 // const editAuthor = async (req, res) => {
@@ -143,6 +150,7 @@ const editAuthor = async (req, res) => {
     const { id } = req.params;
     const updateFields = { ...req.body }; 
     const file = req.file; 
+    const baseURL = 'https://bookingreadingapp.onrender.com/uploads'; 
 
     try {
         let author = await Author.findById(id);
@@ -153,14 +161,16 @@ const editAuthor = async (req, res) => {
             updateFields.photo = file.filename;
         }
 
-        // Find and update the author
         author = await Author.findByIdAndUpdate(id, updateFields, { new: true });
+        if (author.photo) {
+            author.photo = `${baseURL}/${author.photo}`;
+        }
 
         res.status(200).json({ message: "Author updated successfully", author });
     } catch (error) {
         res.status(400).send({ error: error.message });
     }
-}
+};
 
 const deleteAuthor = async(req,res)=>{
     const {id} = req.params;
