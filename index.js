@@ -11,6 +11,7 @@ const bookRoute = require('./routes/book.route.js')
 const userRoute = require('./routes/user.router.js')
 const bookMark = require('./routes/bookmark.route.js')
 const readBook = require('./routes/readBook.route.js')
+const optroute = require('./routes/otp.route.js')
 require('dotenv').config()
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/api/book',bookRoute);
 app.use('/api/user',userRoute);
 app.use('/api/bookmark',bookMark);
 app.use('/api/read',readBook);
+app.use('/api/otp',optroute);
 
 const connectToMongoDB = async () => {
     try {
